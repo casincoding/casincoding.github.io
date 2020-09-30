@@ -1,6 +1,6 @@
 /**
-* Template Name: Mentor - v2.1.0
-* Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
+* Template Name: Kelly - v2.0.0
+* Template URL: https://bootstrapmade.com/kelly-free-bootstrap-cv-resume-html-template/
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
@@ -17,14 +17,22 @@
   });
 
   // Smooth scroll for the navigation menu and links with .scrollto classes
-  var scrolltoOffset = $('#header').outerHeight() - 1;
   $(document).on('click', '.nav-menu a, .mobile-nav a, .scrollto', function(e) {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
       var target = $(this.hash);
       if (target.length) {
         e.preventDefault();
 
-        var scrollto = target.offset().top - scrolltoOffset;
+        var scrollto = target.offset().top;
+        var scrolled = 20;
+
+        if ($('#header').length) {
+          scrollto -= $('#header').outerHeight()
+
+          if (!$('#header').hasClass('header-scrolled')) {
+            scrollto += scrolled;
+          }
+        }
 
         if ($(this).attr("href") == '#header') {
           scrollto = 0;
@@ -45,19 +53,6 @@
           $('.mobile-nav-overly').fadeOut();
         }
         return false;
-      }
-    }
-  });
-
-  // Activate smooth scroll on page load with hash links in the url
-  $(document).ready(function() {
-    if (window.location.hash) {
-      var initial_nav = window.location.hash;
-      if ($(initial_nav).length) {
-        var scrollto = $(initial_nav).offset().top - scrolltoOffset;
-        $('html, body').animate({
-          scrollTop: scrollto
-        }, 1500, 'easeInOutExpo');
       }
     }
   });
@@ -113,6 +108,15 @@
     return false;
   });
 
+  // Skills section
+  $('.skills-content').waypoint(function() {
+    $('.progress .progress-bar').each(function() {
+      $(this).css("width", $(this).attr("aria-valuenow") + '%');
+    });
+  }, {
+    offset: '80%'
+  });
+
   // jQuery counterUp
   $('[data-toggle="counter-up"]').counterUp({
     delay: 10,
@@ -124,25 +128,50 @@
     autoplay: true,
     dots: true,
     loop: true,
-    responsive: {
-      0: {
-        items: 1
-      },
-      768: {
-        items: 1
-      },
-      900: {
-        items: 2
-      }
-    }
+    items: 1
+  });
+
+  // Porfolio isotope and filter
+  $(window).on('load', function() {
+    var portfolioIsotope = $('.portfolio-container').isotope({
+      itemSelector: '.portfolio-item'
+    });
+
+    $('#portfolio-flters li').on('click', function() {
+      $("#portfolio-flters li").removeClass('filter-active');
+      $(this).addClass('filter-active');
+
+      portfolioIsotope.isotope({
+        filter: $(this).data('filter')
+      });
+      aos_init();
+    });
+
+    // Initiate venobox (lightbox feature used in portofilo)
+    $(document).ready(function() {
+      $('.venobox').venobox({
+        'share': false
+      });
+    });
+  });
+
+  // Portfolio details carousel
+  $(".portfolio-details-carousel").owlCarousel({
+    autoplay: true,
+    dots: true,
+    loop: true,
+    items: 1
   });
 
   // Init AOS
-  $(window).on('load', function() {
+  function aos_init() {
     AOS.init({
       duration: 1000,
       once: true
     });
+  }
+  $(window).on('load', function() {
+    aos_init();
   });
 
 })(jQuery);
