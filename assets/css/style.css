@@ -464,16 +464,19 @@ h1, h2, h3, h4, h5, h6 {
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
+
+/*For image resize, see video: https://www.youtube.com/watch?v=VF5kD6QEEag/*/
+
 #hero {
   width: 100%;
   /*height: 80vh;*/
-  background: url("../img/hero-bg.png") top center;
+  background: url("../img/hero-bg.png")  center;
   background-size: cover;
 }
 
 #hero .container {
-  /*padding-top: 70px;*/
-  padding-top: 50%;
+  padding-top: 65vh; /*70px*/
+  /*padding-top: 45%;*/
   position: relative;
 }
 
@@ -486,7 +489,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 768px) {
   #hero .container {
     /*padding-top: 100px;*/
-    padding-top: 50%;
+    padding-top: 65%;
   }
 }
 
